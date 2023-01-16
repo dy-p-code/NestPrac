@@ -1,29 +1,53 @@
 import * as express from "express";
 import catRouter from "./cats/cats.router";
 
-const app: express.Express = express();
-// const app: express.Application = express()
+class Server {
+  public app: express.Application;
 
-// Logging Middleware
-app.use((req, res, next) => {
-  console.log(req.rawHeaders[1]);
-  console.log("This is logging middleware");
-  next();
-});
+  constructor() {
+    const app: express.Application = express();
+    this.app = app;
+  }
 
-// JSON Middleware
-app.use(express.json());
+  // router middleware
+  private setRouter() {
+    this.app.use(catRouter);
+  }
 
-// Cat router
-app.use(catRouter);
+  private setMiddleware() {
+    // const app: express.Express = express();
+    // const app: express.Application = express()
 
-// 404 middleware
-app.use((req, res, next) => {
-  console.log("This is error middleware");
-  res.send({ error: "404 Not found error" });
-  next();
-});
+    // Logging Middleware
+    this.app.use((req, res, next) => {
+      console.log(req.rawHeaders[1]);
+      console.log("This is logging middleware");
+      next();
+    });
 
-app.listen(8000, () => {
-  console.log("server on");
-});
+    // JSON Middleware
+    this.app.use(express.json());
+
+    this.setRouter;
+
+    // 404 middleware
+    this.app.use((req, res, next) => {
+      console.log("This is error middleware");
+      res.send({ error: "404 Not found error" });
+      next();
+    });
+  }
+  public listen() {
+    this.setMiddleware();
+    this.app.listen(8000, () => {
+      console.log("server on");
+    });
+  }
+}
+
+function init() {
+  const server = new Server();
+  server.listen();
+}
+
+init();

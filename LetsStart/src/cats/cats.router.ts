@@ -1,5 +1,4 @@
 // READ : 고양이 전체 데이터 조회 API
-import * as express from "express";
 import { Cat, CatType } from "./app.model";
 import { Router } from "express";
 
