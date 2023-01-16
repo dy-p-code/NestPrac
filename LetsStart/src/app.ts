@@ -4,23 +4,17 @@ import { Cat, CatType } from "./app.model";
 const app: express.Express = express();
 // const app: express.Application = express()
 
-// 미들웨어
+// logging
 app.use((req, res, next) => {
   console.log(req.rawHeaders[1]);
-  console.log("middleware");
+  console.log("This is logging middleware");
   next();
 });
 
-app.get("/", (req: express.Request, res: express.Response) => {
-  res.send({ cats: Cat });
-});
-
-app.get("/cats/blue", (req, res, next: express.NextFunction) => {
-  res.send({ blue: Cat[0] });
-});
-
-app.get("/cats/som", (req, res) => {
-  res.send({ som: Cat[1] });
+app.use((req, res, next) => {
+  console.log("This is error middleware");
+  res.send({ error: "404 Not found error" });
+  next();
 });
 
 app.listen(8000, () => {
