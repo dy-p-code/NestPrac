@@ -1,4 +1,3 @@
-import { ExecOptionsWithBufferEncoding } from "child_process";
 import * as express from "express";
 import { Cat, CatType } from "./app.model";
 
