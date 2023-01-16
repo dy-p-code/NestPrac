@@ -4,12 +4,15 @@ import { Cat, CatType } from "./app.model";
 const app: express.Express = express();
 // const app: express.Application = express()
 
-// logging middleware
+// Logging Middleware
 app.use((req, res, next) => {
   console.log(req.rawHeaders[1]);
   console.log("This is logging middleware");
   next();
 });
+
+// JSON Middleware
+app.use(express.json());
 
 // READ : 고양이 전체 데이터 조회 API
 app.get("/cats", (req, res) => {
@@ -30,6 +33,16 @@ app.get("/cats/:id", (req, res) => {
       return cat.id === params.id;
     });
     res.status(200).send({ success: true, data: { cats } });
+  } catch (error) {
+    res.status(400).send({ success: false, error: error.message });
+  }
+});
+
+// CREATE : 새로운 고양이 데이터 추가 API
+app.post("/cats", (req, res) => {
+  try {
+    const data = req.body;
+    res.status(200).send({ success: true, data: {} });
   } catch (error) {
     res.status(400).send({ success: false, error: error.message });
   }
