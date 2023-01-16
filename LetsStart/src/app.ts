@@ -42,7 +42,8 @@ app.get("/cats/:id", (req, res) => {
 app.post("/cats", (req, res) => {
   try {
     const data = req.body;
-    res.status(200).send({ success: true, data: {} });
+    Cat.push(data);
+    res.status(200).send({ success: true, data: { data } });
   } catch (error) {
     res.status(400).send({ success: false, error: error.message });
   }
